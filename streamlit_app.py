@@ -8,12 +8,12 @@ st.write(
     """Choose the fruit you want to add in your custom smoothie!
     """
 )
-
-session=get_active_session()
+cnx=st.connection("Snowflake")
+session=cnx.session()
 name_on_order=st.text_input("Name on Smoothie")
 st.write("The name on smoothie will be", name_on_order)
 
-session = get_active_session()
+
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
 #st.dataframe(data=my_dataframe, use_container_width=True)
 
@@ -43,3 +43,4 @@ if ingredients_list:
     if time_to_submit:
         session.sql(my_insert_stmt).collect()
     st.success('Your Smoothie is ordered!', icon="✅")
+
